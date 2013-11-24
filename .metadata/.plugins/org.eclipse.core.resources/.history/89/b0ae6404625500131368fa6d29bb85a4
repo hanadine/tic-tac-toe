@@ -39,12 +39,13 @@ public class Server {
 			while ((port = in.read()) != -1) {
 				System.out.println(port);
 			}
-			
 			PeerInformation peerInfo = new PeerInformation();
 			
-			//Need to fill the PeerInformation pojo with correct info and add it to the array list
+			//TODO: Need to fill the PeerInformation pojo with correct info and add it to the array list
 			peerInfo.setClient(client);
-			peerInfo.setPort(port);
+			peerInfo.
+			
+			//TODO: receive infromation from the client and store in pojo.
 			
 			clients.add(peerInfo);
 				
