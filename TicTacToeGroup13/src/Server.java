@@ -13,7 +13,8 @@ public class Server {
 	
 	public static void main(String[] args) {
 		startServer();
-				
+		Connector connector = new Connector();
+		connector.start();
 	}
 	
 	public static void startServer() {
@@ -31,12 +32,30 @@ public class Server {
 		while (true) {
 			//Accept a client connection and add the client in the queue.			
 			Socket client = server.accept();
+			PeerInformation peerInfo = new PeerInformation();
 			
+			//TODO: Need the fill the PeerInformation pojo with correct info and add it to the array list
+			//TODO: receive infromation from the client and store in pojo.
 			
-			
-			clients.add(client);
+			clients.add(peerInfo);
 				
-			//If two clients are present in the arraylist then esablish a connection between them
-			//Send the clients to be connected and remove them from the list 
-			
+		}
+	}
+	
+	public static int getArrayListSize() {
+		return clients.size();
+	}
+	
+	public static PeerInformation getFirstClient() {
+		return clients.get(0);
+	}
+	
+	public static PeerInformation getSecondClient() {
+		return clients.get(1);
+	}
+	
+	public static void deleteClients() {
+		clients.remove(0);
+		clients.remove(1);
+	}	
 }
