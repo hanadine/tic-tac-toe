@@ -70,5 +70,5 @@ public class Communicater{
 		outputPeer.writeInt(position);
 		
 	}
->>>>>>> branch 'master' of https://github.com/hanadine/tic-tac-toe.git
+
 }
