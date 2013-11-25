@@ -2,10 +2,12 @@ package peer;
 import java.io.*;
 import java.net.*;
 
-public class Communicater extends Thread{
+public class Communicater{
 	
 	int port, serverPort;
+	String serverAddress;
 	ServerSocket listener;
+	Socket peer;
 	Game game;
 	
 	public Communicater(Game game) throws IOException{
@@ -20,30 +22,28 @@ public class Communicater extends Thread{
 		output.writeInt(port);
 		
 		client.close();
+		startGame();
 		
 	}
-	
-	@Override
-	public void run(){
+
+	public void startGame() throws IOException{
 		
 		Socket connector = listener.accept();
 		BufferedReader in = new BufferedReader(new InputStreamReader(connector.getInputStream()));
 		
-		String playerType;
-		
-		if ((playerType=in.readLine()).equals("SERVER")){
+		if (!in.readLine().equals("SERVER")){
 			
-			Socket peer = listener.accept();
-			BufferedReader in = new BufferedReader(new InputStreamReader(connector.getInputStream()));
-			game.setStatus('S');	
-			
+			game.setStatus('S');
+			peer = listener.accept();
 			
 		} else {
 			
-			while((serverPort=in.read())!=-1){
-				
-			}
+			while((serverPort=in.read())!=-1){}
+			while(!(serverAddress=in.readLine()).equals(null)){}
+			
 			game.setStatus('C');
+			listener.close();
+			peer = new Socket(serverAddress ,serverPort);
 			
 		}
 			
