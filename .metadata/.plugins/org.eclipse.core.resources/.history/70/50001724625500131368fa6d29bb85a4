@@ -1,5 +1,8 @@
-
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -39,9 +42,11 @@ public class Server {
 			
 			PeerInformation peerInfo = new PeerInformation();
 			
-			//Need to fill the PeerInformation pojo with correct info and add it to the array list
+			//TODO: Need to fill the PeerInformation pojo with correct info and add it to the array list
 			peerInfo.setClient(client);
 			peerInfo.setPort(port);
+			
+			//TODO: receive information from the client and store in pojo.
 			
 			clients.add(peerInfo);
 				
