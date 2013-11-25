@@ -6,6 +6,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import server.Connector;
+
 public class Server {
 	static ServerSocket server;
 	static ArrayList<PeerInformation> clients;  
