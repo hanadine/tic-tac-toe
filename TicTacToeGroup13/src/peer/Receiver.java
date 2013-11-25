@@ -27,6 +27,9 @@ public class Receiver extends Thread {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+			game.checkWin();
+			
 		}
 	}
 }
