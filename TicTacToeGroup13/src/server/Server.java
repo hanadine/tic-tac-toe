@@ -1,10 +1,13 @@
 package server;
 import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+
+import org.omg.CORBA.portable.InputStream;
 
 
 public class Server {
@@ -12,9 +15,11 @@ public class Server {
 	static ArrayList<PeerInformation> clients = new ArrayList<PeerInformation>();  
 	
 	public static void main(String[] args) {
-		startServer();
 		Connector connector = new Connector();
-		connector.start();
+		Thread connThread = new Thread(connector);
+		connThread.start();
+		startServer();
+		
 	}
 	
 	public static void startServer() {
@@ -32,10 +37,10 @@ public class Server {
 		while (true) {
 			//Accept a client connection and add the client in the queue.			
 			Socket client = server.accept();
-			BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+			DataInputStream in = new DataInputStream(client.getInputStream());
 			
 			int port;
-			port = in.read();
+			port = in.readInt();
 					
 			PeerInformation peerInfo = new PeerInformation();
 			
@@ -44,7 +49,7 @@ public class Server {
 			peerInfo.setPort(port);
 			
 			System.out.println("Client:" + client.getInetAddress());
-			System.out.print("Port:" + port);
+			System.out.println("Port:" + port);
 			clients.add(peerInfo);				
 		}
 	}
@@ -63,6 +68,6 @@ public class Server {
 	
 	public static void deleteClients() {
 		clients.remove(0);
-		clients.remove(1);
+		clients.remove(0);
 	}	
 }
