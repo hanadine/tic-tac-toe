@@ -80,8 +80,8 @@ public class Communicater{
 		
 		//BufferedReader peerInput = new BufferedReader(new InputStreamReader(peer.getInputStream()));
 		DataOutputStream outputPeer = new DataOutputStream(peer.getOutputStream());
-		System.out.println("position received : "+ position);
+		System.out.println("position sent : "+ position);
 		outputPeer.writeInt(position);
-		
+		//System.out.println("position sent : "+ position);
 	}
 }
