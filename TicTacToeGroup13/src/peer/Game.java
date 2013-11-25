@@ -125,14 +125,37 @@ public class Game implements ActionListener {
 				btnEmptyClicked = true;
 				if(status == 'S' &&  turn % 2 == 1) {
 					btnEmpty[i].setText("X");
-					communicater.sendPosition(i); //---- send position of X
+
+					try {
+						communicater.sendPosition(i);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} //---- send position of X
+					
+					try {
+						communicater.sendPosition(i); //---- send position of X
+					} catch (IOException e) {
+						e.printStackTrace();
+					} 
 					
 					btnEmpty[i].setEnabled(false);
 					pnlPlayingField.requestFocus();
 					turn++;	
 				} else if (status == 'C' && turn % 2 == 0){
 					btnEmpty[i].setText("O");
-					communicater.sendPosition(i); //---- send position of O
+					try {
+						communicater.sendPosition(i);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} //---- send position of O
+					
+					try {
+						communicater.sendPosition(i);  //---- send position of O
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 					
 					btnEmpty[i].setEnabled(false);
 					pnlPlayingField.requestFocus();
