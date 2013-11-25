@@ -46,9 +46,5 @@ public class Communicater{
 			peer = new Socket(serverAddress ,serverPort);
 			
 		}
-			
-
 	}
-	
-	
 }
