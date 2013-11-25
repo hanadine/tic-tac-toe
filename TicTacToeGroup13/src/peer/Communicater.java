@@ -32,23 +32,39 @@ public class Communicater{
 		BufferedReader in = new BufferedReader(new InputStreamReader(connector.getInputStream()));
 		
 		if (!in.readLine().equals("SERVER")){
-			
-			game.setStatus('S');
+	
 			peer = listener.accept();
+			game.setStatus('S');
 			
 		} else {
 			
 			while((serverPort=in.read())!=-1){}
 			while(!(serverAddress=in.readLine()).equals(null)){}
-			
-			game.setStatus('C');
+		
 			listener.close();
-			peer = new Socket(serverAddress ,serverPort);
-			
-		}
-			
+			peer = new Socket(serverAddress, serverPort);
+			game.setStatus('C');
 
+		}
 	}
 	
 	
+	
+	public void receivePosition() throws IOException{
+		
+		BufferedReader peerInput = new BufferedReader(new InputStreamReader(peer.getInputStream()));
+		int position;
+		while((position=peerInput.read())!=-1){}
+		
+		game.setGrid(position);
+		
+	}
+	
+	public void sendPosition(int position) throws IOException{
+		
+		//BufferedReader peerInput = new BufferedReader(new InputStreamReader(peer.getInputStream()));
+		DataOutputStream outputPeer = new DataOutputStream(peer.getOutputStream());
+		outputPeer.writeInt(position);
+		
+	}
 }

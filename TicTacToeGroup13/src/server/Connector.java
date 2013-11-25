@@ -33,7 +33,7 @@ public class Connector extends Thread {
 		
 		Socket c1 = new Socket(client1.getClient().getLocalAddress(), client1.getPort());
 		Socket c2 = new Socket(client2.getClient().getLocalAddress(), client2.getPort());
-	
+		
 		setServerAndClient(c1, c2);
 	}
 	
@@ -41,16 +41,21 @@ public class Connector extends Thread {
 		String server = "SERVER";
 		String client = "CLIENT";
 		int port = client1.getPort();
+		String addr = client1.getClient().getLocalAddress().getHostAddress();
 		
 		//Create the objects to send information to clients.		
 		DataOutputStream outToClient1 = new DataOutputStream(c1.getOutputStream());
 		DataOutputStream outToClient2 = new DataOutputStream(c2.getOutputStream());
 		
 		//Tell the clients if they are the client or the server
-		outToClient1.writeBytes(server);
-		outToClient2.writeBytes(client);
+		outToClient1.writeBytes(server + "\n");
+		outToClient2.writeBytes(client + "\n");
 		
 		//Get the port number that the server has chosen.		
-		outToClient2.writeInt(port);	
+		outToClient2.writeBytes(port + "\n");
+		outToClient2.writeBytes(addr);
+		
+		c1.close();
+		c2.close();
 	}
 }
