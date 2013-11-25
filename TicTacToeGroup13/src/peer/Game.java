@@ -175,12 +175,14 @@ public class Game implements ActionListener {
 				JDialog dialog = new JDialog();
 				JLabel label = new JLabel("Please wait...");
 				dialog.setLocationRelativeTo(null);
-				dialog.setTitle("Please Wait...");
+				dialog.setTitle("WAIT.");
 				dialog.add(label);
 				dialog.pack();
+				dialog.setSize(100, 100);
 				dialog.setVisible(true);
-				System.out.println("communicator...");
+				
 				communicater = new Communicater(this);
+				
 				dialog.setVisible(false);
 			} catch (IOException e) {
 				e.printStackTrace();
