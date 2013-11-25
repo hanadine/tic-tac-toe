@@ -177,7 +177,16 @@ public class Game implements ActionListener {
 				e.printStackTrace();
 			}
 			
+			//wait for another player
+			JDialog dialog = new JDialog();
+			JLabel label = new JLabel("Please wait...");
+			dialog.setLocationRelativeTo(null);
+			dialog.setTitle("Please Wait...");
+			dialog.add(label);
+			dialog.pack();
+			dialog.setVisible(true);
 			while(status == 'a') {} //wait until status is 'S' or 'C'
+			dialog.setVisible(false);
 			
 			System.out.println("Connection Successful..");
 			
