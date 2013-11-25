@@ -49,7 +49,7 @@ public class Game implements ActionListener {
 	boolean btnEmptyClicked = false;
 	
 	// added variable --------------
-	boolean server = false;
+	char server = 'a';
 	
 	// -----------------------------
 	
@@ -122,14 +122,14 @@ public class Game implements ActionListener {
 		for(int i=1; i<=9; i++) {    //THIS IS WHERE THE CODE NEEDS TO BE MODIFIED 
 			if(source == btnEmpty[i] && turn < 10) {
 				btnEmptyClicked = true;
-				if(server &&  turn % 2 == 1) {
+				if(server == 'S' &&  turn % 2 == 1) {
 					btnEmpty[i].setText("X");
 					//---- send position of X
 					
 					btnEmpty[i].setEnabled(false);
 					pnlPlayingField.requestFocus();
 					turn++;	
-				} else if (!server && turn % 2 == 0){
+				} else if (server == 'C' && turn % 2 == 0){
 					btnEmpty[i].setText("O");
 					//---- send position of O
 					
@@ -153,6 +153,11 @@ public class Game implements ActionListener {
 
 		}
 		else if(source == btn1v1) {
+			
+			Communicater communicater = new Communicater(this);
+			Thread commThread = new Thread(communicater);
+			commThread.start();
+			
 			if(inGame) {
 				int option = JOptionPane.showConfirmDialog(null, "If you start a new game," +
 						"your current game will be lost..." + "\n" +
@@ -173,7 +178,6 @@ public class Game implements ActionListener {
 				}
 				win = false;
 				showGame();
-
 			}
 		}
 		else if(source == mnuExit) {
@@ -292,8 +296,8 @@ Conclusion: So basically it checks if it is equal to the btnEmpty is equal to ea
 		pnlBottom.remove(btnBack);
 	}
 	
-	public void setServer(boolean b) {
-		server = b;
+	public void setStatus(char status) {
+		server = status;
 	}
 	
 	public int getTurn() {
@@ -304,6 +308,18 @@ Conclusion: So basically it checks if it is equal to the btnEmpty is equal to ea
 		turn++;
 	}
 
+	public void setGrid(int i,String xo) {
+		//if ()
+			btnEmpty[i].setText("X");
+		//else
+			btnEmpty[i].setText("X");
+		
+		
+		btnEmpty[i].setEnabled(false);
+		pnlPlayingField.requestFocus();
+		
+	}
+	
 	public static void main(String[] args) {
 		new Game();// Calling the class construtor.
 	}
