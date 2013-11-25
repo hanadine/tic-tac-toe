@@ -42,18 +42,14 @@ public class Communicater{
 			while(!(serverAddress=in.readLine()).equals(null)){}
 		
 			listener.close();
-<<<<<<< HEAD
-			peer = new Socket(serverAddress ,serverPort);
 			
-=======
+			peer = new Socket(serverAddress ,serverPort);
 			peer = new Socket(serverAddress, serverPort);
 			game.setStatus('C');
 
->>>>>>> branch 'master' of https://github.com/hanadine/tic-tac-toe.git
 		}
 	}
-<<<<<<< HEAD
-=======
+
 	
 	
 	
