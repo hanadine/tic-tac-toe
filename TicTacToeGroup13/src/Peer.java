@@ -481,8 +481,6 @@ public class Peer extends JFrame {
 					outputStream = new DataOutputStream(socket.getOutputStream());
 					outputStream.writeInt(9880);
 					
-					
-					
 					send("");
 					/*objInputStream = new ObjectInputStream(socket.getInputStream());
 
