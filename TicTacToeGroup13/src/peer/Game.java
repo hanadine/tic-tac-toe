@@ -133,19 +133,6 @@ public class Game implements ActionListener {
 						e.printStackTrace();
 					} //---- send position of X
 					
-					try {
-						communicater.sendPosition(i); //---- send position of X
-					} catch (IOException e) {
-						e.printStackTrace();
-					} 
-					try {
-						communicater.sendPosition(i);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} //---- send position of X
-
-					
 					btnEmpty[i].setEnabled(false);
 					pnlPlayingField.requestFocus();
 					turn++;	
@@ -157,14 +144,6 @@ public class Game implements ActionListener {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} //---- send position of O
-
-					
-					try {
-						communicater.sendPosition(i);  //---- send position of O
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-
 					
 					btnEmpty[i].setEnabled(false);
 					pnlPlayingField.requestFocus();
