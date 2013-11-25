@@ -16,7 +16,7 @@ public class Communicater{
 		listener = new ServerSocket(0);
 		port = listener.getLocalPort();
 		
-		Socket client = new Socket("127.0.0.1", 50060);
+		Socket client = new Socket("142.157.112.62", 50060);
 		DataOutputStream output = new DataOutputStream(client.getOutputStream());
 		
 		output.writeInt(port);
