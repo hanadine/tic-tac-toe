@@ -49,7 +49,7 @@ public class Game implements ActionListener {
 	boolean btnEmptyClicked = false;
 	
 	// added variable --------------
-	char server = 'a';
+	char status = 'a';
 	
 	// -----------------------------
 	
@@ -122,14 +122,14 @@ public class Game implements ActionListener {
 		for(int i=1; i<=9; i++) {    //THIS IS WHERE THE CODE NEEDS TO BE MODIFIED 
 			if(source == btnEmpty[i] && turn < 10) {
 				btnEmptyClicked = true;
-				if(server == 'S' &&  turn % 2 == 1) {
+				if(status == 'S' &&  turn % 2 == 1) {
 					btnEmpty[i].setText("X");
 					//---- send position of X
 					
 					btnEmpty[i].setEnabled(false);
 					pnlPlayingField.requestFocus();
 					turn++;	
-				} else if (server == 'C' && turn % 2 == 0){
+				} else if (status == 'C' && turn % 2 == 0){
 					btnEmpty[i].setText("O");
 					//---- send position of O
 					
@@ -138,23 +138,23 @@ public class Game implements ActionListener {
 					turn++;	
 				}
 			}
-		}
-		if(btnEmptyClicked) {
+		} if(btnEmptyClicked) {
+			
 			checkWin();
 			btnEmptyClicked = false;
-		}
-		if(source == mnuNewGame) {
+			
+		} if(source == mnuNewGame) {
+			
 			clearPanelSouth();
 			pnlSouth.setLayout(new GridLayout(2, 1, 2, 5));
 			pnlTop.add(pnlNewGame);
 			pnlBottom.add(btnBack);
 			pnlSouth.add(pnlTop);
 			pnlSouth.add(pnlBottom);
-
-		}
-		else if(source == btn1v1) {
 			
-			//Communicater communicater = new Communicater(this);
+		} else if(source == btn1v1) {
+			
+			Communicater communicater = new Communicater(this);
 			//Thread commThread = new Thread(communicater);
 			//commThread.start();
 			
@@ -167,6 +167,7 @@ public class Game implements ActionListener {
 					inGame = false;
 				}
 			}
+			
 			if(!inGame) {
 				btnEmpty[wonNumber1].setBackground(new Color(220, 220, 220));
 				btnEmpty[wonNumber2].setBackground(new Color(220, 220, 220));
@@ -179,14 +180,16 @@ public class Game implements ActionListener {
 				win = false;
 				showGame();
 			}
-		}
-		else if(source == mnuExit) {
+			
+		} else if(source == mnuExit) {
+			
 			int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?",
 					"Exit Game" ,JOptionPane.YES_NO_OPTION);
 			if(option == JOptionPane.YES_OPTION)
 				System.exit(0);
-		}
-		else if(source == mnuInstruction || source == mnuAbout) {
+			
+		} else if(source == mnuInstruction || source == mnuAbout) {
+			
 			clearPanelSouth();
 			String message = "";
 			txtMessage.setBackground(new Color(color, color, color));
@@ -207,8 +210,9 @@ public class Game implements ActionListener {
 			pnlBottom.add(btnBack);
 			pnlSouth.add(pnlTop);
 			pnlSouth.add(pnlBottom);
-		}
-		else if(source == btnBack) {
+			
+		} else if(source == btnBack) {
+			
 			if(inGame)
 				showGame();
 			else {
@@ -217,6 +221,7 @@ public class Game implements ActionListener {
 				pnlNorth.setVisible(true);
 				pnlSouth.add(lblTitle);
 			}
+			
 		}
 		pnlSouth.setVisible(false);
 		pnlSouth.setVisible(true);
@@ -297,27 +302,19 @@ Conclusion: So basically it checks if it is equal to the btnEmpty is equal to ea
 	}
 	
 	public void setStatus(char status) {
-		server = status;
-	}
-	
-	public int getTurn() {
-		return turn;
-	}
-	
-	public void incrementTurn() {
-		turn++;
+		this.status = status;
 	}
 
 	public void setGrid(int i,String xo) {
-		//if ()
+		if (status == 'S') {
+			btnEmpty[i].setText("O");
+		} else {
 			btnEmpty[i].setText("X");
-		//else
-			btnEmpty[i].setText("X");
-		
+		}
 		
 		btnEmpty[i].setEnabled(false);
 		pnlPlayingField.requestFocus();
-		
+		turn++;
 	}
 	
 	public static void main(String[] args) {
