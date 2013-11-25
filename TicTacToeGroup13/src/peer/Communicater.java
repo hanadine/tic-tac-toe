@@ -38,12 +38,12 @@ public class Communicater{
 			
 		} else {
 			
-			while((serverPort=in.read())!=-1){}
-			while(!(serverAddress=in.readLine()).equals(null)){}
+			serverPort=in.read();
+			serverAddress=in.readLine();
 		
 			listener.close();
 			
-			peer = new Socket(serverAddress ,serverPort);
+			peer = new Socket(serverAddress, serverPort);
 			peer = new Socket(serverAddress, serverPort);
 			game.setStatus('C');
 
@@ -57,7 +57,7 @@ public class Communicater{
 		
 		BufferedReader peerInput = new BufferedReader(new InputStreamReader(peer.getInputStream()));
 		int position;
-		while((position=peerInput.read())!=-1){}
+		position=peerInput.read();
 		
 		game.setGrid(position);
 		
