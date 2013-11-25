@@ -162,10 +162,6 @@ public class Game implements ActionListener {
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-<<<<<<< HEAD
-=======
-
->>>>>>> branch 'master' of https://github.com/hanadine/tic-tac-toe.git
 					
 					btnEmpty[i].setEnabled(false);
 					pnlPlayingField.requestFocus();
