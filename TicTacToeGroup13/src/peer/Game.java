@@ -127,48 +127,31 @@ public class Game implements ActionListener {
 					btnEmpty[i].setText("X");
 
 					try {
+						System.out.println("send X position...");
 						communicater.sendPosition(i);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} //---- send position of X
-					
-					try {
-						communicater.sendPosition(i); //---- send position of X
-					} catch (IOException e) {
-						e.printStackTrace();
-					} 
-					try {
-						communicater.sendPosition(i);
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} //---- send position of X
-
 					
 					btnEmpty[i].setEnabled(false);
 					pnlPlayingField.requestFocus();
 					turn++;	
+					System.out.println(turn);
 				} else if (status == 'C' && turn % 2 == 0){
 					btnEmpty[i].setText("O");
 					try {
+						System.out.println("send O position...");
 						communicater.sendPosition(i);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} //---- send position of O
-
-					
-					try {
-						communicater.sendPosition(i);  //---- send position of O
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-
 					
 					btnEmpty[i].setEnabled(false);
 					pnlPlayingField.requestFocus();
 					turn++;	
+					System.out.println(turn);
 				}
 			}
 		} if(btnEmptyClicked) {
@@ -188,12 +171,15 @@ public class Game implements ActionListener {
 		} else if(source == btn1v1) {
 			
 			try {
+				System.out.println("communicator...");
 				communicater = new Communicater(this);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			
 			while(status == 'a') {} //wait until status is 'S' or 'C'
+			
+			System.out.println("Connection Successful..");
 			
 			//Thread commThread = new Thread(communicater);
 			//commThread.start();
@@ -315,7 +301,7 @@ Conclusion: So basically it checks if it is equal to the btnEmpty is equal to ea
 		
 		if(win || (!win && turn>9)) {
 			if(win) {
-				if(turn % 2 == 0)
+				if(turn % 2 == 1)
 					message = "X has won!";
 				else
 					message = "O has won!";
