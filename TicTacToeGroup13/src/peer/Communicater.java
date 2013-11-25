@@ -34,6 +34,7 @@ public class Communicater{
 		Socket connector = listener.accept();
 		System.out.println("test 2");
 		BufferedReader in = new BufferedReader(new InputStreamReader(connector.getInputStream()));
+		DataInputStream inStream = new DataInputStream(connector.getInputStream());
 		
 		if (!in.readLine().equals("SERVER")){
 	
@@ -42,13 +43,17 @@ public class Communicater{
 			
 		} else {
 			
-			serverPort=in.read();
+			serverPort = inStream.readInt();
+			System.out.println("serverPort: "+ serverPort);
+			
+			
 			serverAddress=in.readLine();
-		
+			System.out.println("serverAddress: "+ serverAddress);
+			
 			listener.close();
 			
 			peer = new Socket(serverAddress, serverPort);
-			peer = new Socket(serverAddress, serverPort);
+			//peer = new Socket(serverAddress, serverPort);
 			game.setStatus('C');
 
 		}
