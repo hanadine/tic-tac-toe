@@ -66,7 +66,7 @@ public class Communicater{
 		
 		DataInputStream peerInput = new DataInputStream(peer.getInputStream());
 		int position;
-		position=peerInput.read();
+		position=peerInput.readInt();
 		
 		game.setGrid(position);
 		
