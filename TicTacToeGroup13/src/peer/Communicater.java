@@ -58,23 +58,12 @@ public class Communicater{
 			game.setStatus('C');
 
 		}
-	}
-
-
-	
-	public void receivePosition() throws IOException{
 		
-		DataInputStream peerInput = new DataInputStream(peer.getInputStream());
+		Receiver receiver = new Receiver(game, peer);
+		Thread receiverThread = new Thread(receiver);
+		receiverThread.start();
 		
-		
-		int position;
-		position=peerInput.readInt();
-		
-		
-		System.out.println("position received : "+ position);
-		game.setGrid(position);
-		
-	}
+	}	
 	
 	public void sendPosition(int position) throws IOException{
 		
