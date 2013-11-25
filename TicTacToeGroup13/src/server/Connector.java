@@ -1,6 +1,4 @@
 package server;
-import PeerInformation;
-import Server;
 
 import java.io.IOException;
 import java.net.Socket;
