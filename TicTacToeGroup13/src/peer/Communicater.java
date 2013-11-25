@@ -65,9 +65,13 @@ public class Communicater{
 	public void receivePosition() throws IOException{
 		
 		DataInputStream peerInput = new DataInputStream(peer.getInputStream());
+		
+		
 		int position;
 		position=peerInput.readInt();
 		
+		
+		System.out.println("position received : "+ position);
 		game.setGrid(position);
 		
 	}
@@ -76,6 +80,7 @@ public class Communicater{
 		
 		//BufferedReader peerInput = new BufferedReader(new InputStreamReader(peer.getInputStream()));
 		DataOutputStream outputPeer = new DataOutputStream(peer.getOutputStream());
+		System.out.println("position received : "+ position);
 		outputPeer.writeInt(position);
 		
 	}
