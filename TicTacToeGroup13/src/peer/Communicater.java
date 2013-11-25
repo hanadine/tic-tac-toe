@@ -13,8 +13,10 @@ public class Communicater{
 	public Communicater(Game game) throws IOException{
 		
 		this.game = game;
+
+		listener = new ServerSocket(0);
 		listener = new ServerSocket(port);
-		//port = listener.getLocalPort();
+
 		
 		Socket client = new Socket("142.157.112.62", 50060);
 		DataOutputStream output = new DataOutputStream(client.getOutputStream());
