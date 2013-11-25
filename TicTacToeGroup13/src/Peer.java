@@ -1,3 +1,4 @@
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -50,6 +51,8 @@ public class Peer extends JFrame {
 	private Socket socket = null;
 	private ObjectInputStream objInputStream = null;
 	private ObjectOutputStream objOutputStream = null;
+	
+	private DataOutputStream outputStream = null;
 
 	private Dimension screenSize;									// screen size
 	private int width;												// width of screen
@@ -68,6 +71,8 @@ public class Peer extends JFrame {
 
 	private JTextField ip, port, nick, message; 					// IP address, port number, nickname, chat message
 	private JButton join, create, newGame; 						// buttons : JOIN, CREATE, NEW GAME
+	
+	private int serverPort = 50060;
 
 	private String xoField[] = { "","","", "","","", "","","" }; 		// FIELDS XO (see example in multiline comment)
 	/*
@@ -100,7 +105,6 @@ public class Peer extends JFrame {
 	public Peer() {
 		//Initialize the Interface
 		UserInterface();
-
 	}
 
 	private void UserInterface() {
@@ -469,11 +473,17 @@ public class Peer extends JFrame {
 
 					findPlayer(); // we need thread while we wait for client, because we don't want frozen frame
 
-					//socket = new Socket(ip.getText(), Integer.parseInt(port.getText())); 
+					socket = new Socket(ip.getText(), serverPort); //connect to server
 
-					//objOutputStream = new ObjectOutputStream(socket.getOutputStream());
-					//objOutputStream.flush();
-
+					objOutputStream = new ObjectOutputStream(socket.getOutputStream());
+					objOutputStream.flush();					
+					
+					outputStream = new DataOutputStream(socket.getOutputStream());
+					outputStream.writeInt(9880);
+					
+					
+					
+					send("");
 					/*objInputStream = new ObjectInputStream(socket.getInputStream());
 
 					chatmsg = (String) objInputStream.readObject();
