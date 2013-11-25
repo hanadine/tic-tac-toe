@@ -177,8 +177,6 @@ public class Game implements ActionListener {
 				e.printStackTrace();
 			}
 			
-			System.out.println("while...");
-			
 			while(status == 'a') {} //wait until status is 'S' or 'C'
 			
 			System.out.println("Connection Successful..");
