@@ -154,9 +154,9 @@ public class Game implements ActionListener {
 		}
 		else if(source == btn1v1) {
 			
-			Communicater communicater = new Communicater(this);
-			Thread commThread = new Thread(communicater);
-			commThread.start();
+			//Communicater communicater = new Communicater(this);
+			//Thread commThread = new Thread(communicater);
+			//commThread.start();
 			
 			if(inGame) {
 				int option = JOptionPane.showConfirmDialog(null, "If you start a new game," +
