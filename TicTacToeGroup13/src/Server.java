@@ -44,8 +44,7 @@ public class Server {
 			peerInfo.setClient(client);
 			peerInfo.setPort(port);
 			
-			clients.add(peerInfo);
-				
+			clients.add(peerInfo);				
 		}
 	}
 	
