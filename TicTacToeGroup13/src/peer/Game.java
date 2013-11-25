@@ -127,6 +127,7 @@ public class Game implements ActionListener {
 					btnEmpty[i].setText("X");
 
 					try {
+						System.out.println("send X position...");
 						communicater.sendPosition(i);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
@@ -136,9 +137,11 @@ public class Game implements ActionListener {
 					btnEmpty[i].setEnabled(false);
 					pnlPlayingField.requestFocus();
 					turn++;	
+					System.out.println(turn);
 				} else if (status == 'C' && turn % 2 == 0){
 					btnEmpty[i].setText("O");
 					try {
+						System.out.println("send O position...");
 						communicater.sendPosition(i);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
@@ -148,6 +151,7 @@ public class Game implements ActionListener {
 					btnEmpty[i].setEnabled(false);
 					pnlPlayingField.requestFocus();
 					turn++;	
+					System.out.println(turn);
 				}
 			}
 		} if(btnEmptyClicked) {
