@@ -9,6 +9,7 @@ Changes:
 See Below...
  */
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
@@ -154,7 +155,14 @@ public class Game implements ActionListener {
 			
 		} else if(source == btn1v1) {
 			
-			Communicater communicater = new Communicater(this);
+			try {
+				Communicater communicater = new Communicater(this);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			while(status == 'a') {} //wait until status is 'S' or 'C'
+			
 			//Thread commThread = new Thread(communicater);
 			//commThread.start();
 			
@@ -272,6 +280,7 @@ Conclusion: So basically it checks if it is equal to the btnEmpty is equal to ea
 				break;
 			}
 		}
+		
 		if(win || (!win && turn>9)) {
 			if(win) {
 				if(turn % 2 == 0)
@@ -301,11 +310,12 @@ Conclusion: So basically it checks if it is equal to the btnEmpty is equal to ea
 		pnlBottom.remove(btnBack);
 	}
 	
+	//----------- ADDED METHODS -----------
 	public void setStatus(char status) {
 		this.status = status;
 	}
 
-	public void setGrid(int i,String xo) {
+	public void setGrid(int i) {
 		if (status == 'S') {
 			btnEmpty[i].setText("O");
 		} else {
@@ -316,6 +326,7 @@ Conclusion: So basically it checks if it is equal to the btnEmpty is equal to ea
 		pnlPlayingField.requestFocus();
 		turn++;
 	}
+	//--------------------------------------
 	
 	public static void main(String[] args) {
 		new Game();// Calling the class construtor.
