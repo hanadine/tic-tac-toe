@@ -51,7 +51,7 @@ public class Game implements ActionListener {
 	
 	// added variable --------------
 	char status = 'a';
-	
+	Communicater communicater;
 	// -----------------------------
 	
 	String message;
@@ -125,14 +125,14 @@ public class Game implements ActionListener {
 				btnEmptyClicked = true;
 				if(status == 'S' &&  turn % 2 == 1) {
 					btnEmpty[i].setText("X");
-					//---- send position of X
+					communicater.sendPosition(i); //---- send position of X
 					
 					btnEmpty[i].setEnabled(false);
 					pnlPlayingField.requestFocus();
 					turn++;	
 				} else if (status == 'C' && turn % 2 == 0){
 					btnEmpty[i].setText("O");
-					//---- send position of O
+					communicater.sendPosition(i); //---- send position of O
 					
 					btnEmpty[i].setEnabled(false);
 					pnlPlayingField.requestFocus();
@@ -156,7 +156,7 @@ public class Game implements ActionListener {
 		} else if(source == btn1v1) {
 			
 			try {
-				Communicater communicater = new Communicater(this);
+				communicater = new Communicater(this);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
