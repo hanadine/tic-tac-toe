@@ -13,22 +13,28 @@ public class Communicater{
 	public Communicater(Game game) throws IOException{
 		
 		this.game = game;
+
 		listener = new ServerSocket(0);
-		//port = listener.getLocalPort();
+		listener = new ServerSocket(port);
+
 		
 		Socket client = new Socket("142.157.112.62", 50060);
 		DataOutputStream output = new DataOutputStream(client.getOutputStream());
-		
+		System.out.println("port : "+ port);
 		output.writeInt(port);
 		
 		client.close();
+		
+		System.out.println("closed client successfully");
 		startGame();
 		
 	}
 
 	public void startGame() throws IOException{
 		
+		System.out.println("test 1");
 		Socket connector = listener.accept();
+		System.out.println("test 2");
 		BufferedReader in = new BufferedReader(new InputStreamReader(connector.getInputStream()));
 		
 		if (!in.readLine().equals("SERVER")){
@@ -50,8 +56,7 @@ public class Communicater{
 		}
 	}
 
-	
-	
+
 	
 	public void receivePosition() throws IOException{
 		
@@ -70,5 +75,4 @@ public class Communicater{
 		outputPeer.writeInt(position);
 		
 	}
-
 }
