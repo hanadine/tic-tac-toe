@@ -125,7 +125,6 @@ public class Game implements ActionListener {
 				btnEmptyClicked = true;
 				if(status == 'S' &&  turn % 2 == 1) {
 					btnEmpty[i].setText("X");
-<<<<<<< HEAD
 
 					try {
 						communicater.sendPosition(i);
@@ -139,14 +138,12 @@ public class Game implements ActionListener {
 					} catch (IOException e) {
 						e.printStackTrace();
 					} 
-=======
 					try {
 						communicater.sendPosition(i);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} //---- send position of X
->>>>>>> branch 'master' of https://github.com/hanadine/tic-tac-toe.git
 					
 					btnEmpty[i].setEnabled(false);
 					pnlPlayingField.requestFocus();
@@ -159,15 +156,12 @@ public class Game implements ActionListener {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} //---- send position of O
-<<<<<<< HEAD
 					
 					try {
 						communicater.sendPosition(i);  //---- send position of O
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-=======
->>>>>>> branch 'master' of https://github.com/hanadine/tic-tac-toe.git
 					
 					btnEmpty[i].setEnabled(false);
 					pnlPlayingField.requestFocus();
