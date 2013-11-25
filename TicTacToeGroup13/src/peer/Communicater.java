@@ -35,16 +35,17 @@ public class Communicater{
 		System.out.println("test 2");
 		BufferedReader in = new BufferedReader(new InputStreamReader(connector.getInputStream()));
 		//DataInputStream inStream = new DataInputStream(connector.getInputStream());
-		
-		if (!in.readLine().equals("SERVER")){
+		String type = in.readLine();
+		System.out.println(type);
+		if (type.equals("SERVER")){
 	
 			peer = listener.accept();
 			game.setStatus('S');
 			
 		} else {
 			
-			serverPort = Integer.parseInt(in.readLine());
-			System.out.println("serverPort: "+ serverPort);
+			//serverPort = Integer.parseInt(in.readLine());
+			System.out.println("serverPort: "+ in.readLine());
 			
 			
 			serverAddress=in.readLine();
