@@ -4,7 +4,7 @@ import java.net.*;
 
 public class Communicater{
 	
-	int port, serverPort;
+	int port = 50040, serverPort;
 	String serverAddress;
 	ServerSocket listener;
 	Socket peer;
@@ -14,7 +14,7 @@ public class Communicater{
 		
 		this.game = game;
 		listener = new ServerSocket(0);
-		port = listener.getLocalPort();
+		//port = listener.getLocalPort();
 		
 		Socket client = new Socket("142.157.112.62", 50060);
 		DataOutputStream output = new DataOutputStream(client.getOutputStream());

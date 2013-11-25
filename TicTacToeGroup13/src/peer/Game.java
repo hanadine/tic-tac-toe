@@ -188,12 +188,17 @@ public class Game implements ActionListener {
 		} else if(source == btn1v1) {
 			
 			try {
+				System.out.println("communicator...");
 				communicater = new Communicater(this);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			
+			System.out.println("while...");
+			
 			while(status == 'a') {} //wait until status is 'S' or 'C'
+			
+			System.out.println("Connection Successful..");
 			
 			//Thread commThread = new Thread(communicater);
 			//commThread.start();
