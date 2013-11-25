@@ -1,4 +1,5 @@
 package peer;
+
 /*
 Title: Tic-Tac-Toe Game
 Created: October 5, 2008
@@ -23,8 +24,7 @@ public class Game implements ActionListener {
 			mnuExit = new JMenuItem("Exit"),
 			mnuAbout = new JMenuItem("About");
 
-	JButton btn1v1 = new JButton("Player vs Player"),
-			btn1vCPU = new JButton("Player vs CPU"),
+	JButton btn1v1 = new JButton("Join"),
 			btnBack = new JButton("<--back");
 	JButton btnEmpty[] = new JButton[10];
 
@@ -36,7 +36,7 @@ public class Game implements ActionListener {
 			pnlPlayingField = new JPanel();
 	JLabel lblTitle = new JLabel("Tic-Tac-Toe");
 	JTextArea txtMessage = new JTextArea();
-
+	
 	final int winCombo[][] = new int[][] {
 			{1, 2, 3}, {1, 4, 7}, {1, 5, 9},
 			{4, 5, 6}, {2, 5, 8}, {3, 5, 7},
@@ -47,6 +47,12 @@ public class Game implements ActionListener {
 	boolean inGame = false;
 	boolean win = false;
 	boolean btnEmptyClicked = false;
+	
+	// added variable --------------
+	char server = 'a';
+	
+	// -----------------------------
+	
 	String message;
 	int turn = 1;
 	int wonNumber1 = 1, wonNumber2 = 1, wonNumber3 = 1;
@@ -60,7 +66,7 @@ public class Game implements ActionListener {
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		//Setting Panel layouts and properties
-		pnlNewGame.setLayout(new GridLayout(2, 1, 2, 10));
+		pnlNewGame.setLayout(new GridLayout(2, 1, 2, 0));
 		pnlNorth.setLayout(new FlowLayout(FlowLayout.CENTER));
 		pnlSouth.setLayout(new FlowLayout(FlowLayout.CENTER));
 
@@ -72,7 +78,7 @@ public class Game implements ActionListener {
 
 		pnlTop.setLayout(new FlowLayout(FlowLayout.CENTER));
 		pnlBottom.setLayout(new FlowLayout(FlowLayout.CENTER));
-		pnlNewGame.setBackground(Color.blue);
+		pnlNewGame.setBackground(Color.gray);
 
 		//Adding menu items to menu bar
 		mnuMain.add(mnuNewGame);
@@ -82,7 +88,6 @@ public class Game implements ActionListener {
 
 		//Adding buttons to NewGame panel
 		pnlNewGame.add(btn1v1);
-		pnlNewGame.add(btn1vCPU);
 
 		//Adding Action Listener to all the Buttons and Menu Items
 		mnuNewGame.addActionListener(this);
@@ -90,7 +95,6 @@ public class Game implements ActionListener {
 		mnuInstruction.addActionListener(this);
 		mnuAbout.addActionListener(this);
 		btn1v1.addActionListener(this);
-		btn1vCPU.addActionListener(this);
 		btnBack.addActionListener(this);
 
 		//Setting up the playing field
@@ -118,13 +122,21 @@ public class Game implements ActionListener {
 		for(int i=1; i<=9; i++) {    //THIS IS WHERE THE CODE NEEDS TO BE MODIFIED 
 			if(source == btnEmpty[i] && turn < 10) {
 				btnEmptyClicked = true;
-				if(!(turn % 2 == 0))
+				if(server == 'S' &&  turn % 2 == 1) {
 					btnEmpty[i].setText("X");
-				else
+					//---- send position of X
+					
+					btnEmpty[i].setEnabled(false);
+					pnlPlayingField.requestFocus();
+					turn++;	
+				} else if (server == 'C' && turn % 2 == 0){
 					btnEmpty[i].setText("O");
-				btnEmpty[i].setEnabled(false);
-				pnlPlayingField.requestFocus();
-				turn++;
+					//---- send position of O
+					
+					btnEmpty[i].setEnabled(false);
+					pnlPlayingField.requestFocus();
+					turn++;	
+				}
 			}
 		}
 		if(btnEmptyClicked) {
@@ -141,6 +153,11 @@ public class Game implements ActionListener {
 
 		}
 		else if(source == btn1v1) {
+			
+			//Communicater communicater = new Communicater(this);
+			//Thread commThread = new Thread(communicater);
+			//commThread.start();
+			
 			if(inGame) {
 				int option = JOptionPane.showConfirmDialog(null, "If you start a new game," +
 						"your current game will be lost..." + "\n" +
@@ -161,11 +178,7 @@ public class Game implements ActionListener {
 				}
 				win = false;
 				showGame();
-
 			}
-		}
-		else if(source == btn1vCPU) {
-			JOptionPane.showMessageDialog(null, "Coming Soon!!");
 		}
 		else if(source == mnuExit) {
 			int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?",
@@ -282,7 +295,31 @@ Conclusion: So basically it checks if it is equal to the btnEmpty is equal to ea
 		pnlTop.remove(txtMessage);
 		pnlBottom.remove(btnBack);
 	}
+	
+	public void setStatus(char status) {
+		server = status;
+	}
+	
+	public int getTurn() {
+		return turn;
+	}
+	
+	public void incrementTurn() {
+		turn++;
+	}
 
+	public void setGrid(int i,String xo) {
+		//if ()
+			btnEmpty[i].setText("X");
+		//else
+			btnEmpty[i].setText("X");
+		
+		
+		btnEmpty[i].setEnabled(false);
+		pnlPlayingField.requestFocus();
+		
+	}
+	
 	public static void main(String[] args) {
 		new Game();// Calling the class construtor.
 	}
