@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class Server {
 	static ServerSocket server;
-	static ArrayList<PeerInformation> clients;  
+	static ArrayList<PeerInformation> clients = new ArrayList<PeerInformation>();  
 	
 	public static void main(String[] args) {
 		startServer();
@@ -19,9 +19,9 @@ public class Server {
 	
 	public static void startServer() {
 		 try {
-			server = new ServerSocket(50060);
-			clients.clear();			
+			server = new ServerSocket(50060);			
 			listenForClients();
+			clients.clear();
 		} catch (IOException e) {
 			System.out.println("Could not start server");
 			e.printStackTrace();
@@ -35,18 +35,17 @@ public class Server {
 			BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 			
 			int port;
-			while ((port = in.read()) != -1) {
-				//System.out.println(port);
-			}
-			
+			port = in.read();
+					
 			PeerInformation peerInfo = new PeerInformation();
 			
 			//Need to fill the PeerInformation pojo with correct info and add it to the array list
 			peerInfo.setClient(client);
 			peerInfo.setPort(port);
 			
-			clients.add(peerInfo);
-				
+			System.out.println("Client:" + client.getInetAddress());
+			System.out.print("Port:" + port);
+			clients.add(peerInfo);				
 		}
 	}
 	
