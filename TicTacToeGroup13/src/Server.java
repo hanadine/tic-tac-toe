@@ -32,8 +32,7 @@ public class Server {
 			//Accept a client connection and add the client in the queue.			
 			Socket client = server.accept();
 			BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-			//BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
-			
+						
 			int port;
 			while ((port = in.read()) != -1) {
 				System.out.println(port);
