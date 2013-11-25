@@ -36,7 +36,7 @@ public class Server {
 			
 			int port;
 			while ((port = in.read()) != -1) {
-				System.out.println(port);
+				//System.out.println(port);
 			}
 			
 			PeerInformation peerInfo = new PeerInformation();
