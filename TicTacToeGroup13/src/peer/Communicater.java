@@ -31,9 +31,7 @@ public class Communicater{
 		Socket connector = listener.accept();
 		BufferedReader in = new BufferedReader(new InputStreamReader(connector.getInputStream()));
 		
-		String playerType;
-		
-		if ((playerType=in.readLine()).equals("SERVER")){
+		if (!in.readLine().equals("SERVER")){
 			
 			game.setStatus('S');
 			peer = listener.accept();
