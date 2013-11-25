@@ -144,7 +144,10 @@ public class Game implements ActionListener {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} //---- send position of X
+<<<<<<< HEAD
 
+=======
+>>>>>>> branch 'master' of https://github.com/hanadine/tic-tac-toe.git
 					
 					btnEmpty[i].setEnabled(false);
 					pnlPlayingField.requestFocus();
@@ -157,15 +160,21 @@ public class Game implements ActionListener {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} //---- send position of O
+<<<<<<< HEAD
 
+=======
+>>>>>>> branch 'master' of https://github.com/hanadine/tic-tac-toe.git
 					
 					try {
 						communicater.sendPosition(i);  //---- send position of O
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> branch 'master' of https://github.com/hanadine/tic-tac-toe.git
 					
 					btnEmpty[i].setEnabled(false);
 					pnlPlayingField.requestFocus();
