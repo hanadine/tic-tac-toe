@@ -301,7 +301,7 @@ Conclusion: So basically it checks if it is equal to the btnEmpty is equal to ea
 		
 		if(win || (!win && turn>9)) {
 			if(win) {
-				if(turn % 2 == 0)
+				if(turn % 2 == 1)
 					message = "X has won!";
 				else
 					message = "O has won!";
