@@ -44,8 +44,8 @@ public class Communicater{
 			
 		} else {
 			
-			//serverPort = Integer.parseInt(in.readLine());
-			System.out.println("serverPort: "+ in.readLine());
+			serverPort = Integer.parseInt(in.readLine());
+			//System.out.println("serverPort: "+ in.readLine());
 			
 			
 			serverAddress=in.readLine();
