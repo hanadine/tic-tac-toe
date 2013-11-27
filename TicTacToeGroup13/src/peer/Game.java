@@ -26,7 +26,9 @@ public class Game implements ActionListener {
 			mnuAbout = new JMenuItem("About");
 
 	JButton btn1v1 = new JButton("Join"),
-			btnBack = new JButton("<--back");
+			btnBack = new JButton("back"),
+			btnNewGame = new JButton("New Game");
+	
 	JButton btnEmpty[] = new JButton[10];
 
 	JPanel pnlNewGame = new JPanel(),
@@ -52,6 +54,7 @@ public class Game implements ActionListener {
 	// added variable --------------
 	char status = 'a';
 	Communicater communicater;
+	WaitForPeer waitForPeer = new WaitForPeer(this);
 	// -----------------------------
 	
 	String message;
@@ -89,6 +92,7 @@ public class Game implements ActionListener {
 
 		//Adding buttons to NewGame panel
 		pnlNewGame.add(btn1v1);
+		pnlNewGame.add(btnNewGame);
 
 		//Adding Action Listener to all the Buttons and Menu Items
 		mnuNewGame.addActionListener(this);
@@ -97,6 +101,7 @@ public class Game implements ActionListener {
 		mnuAbout.addActionListener(this);
 		btn1v1.addActionListener(this);
 		btnBack.addActionListener(this);
+		btnNewGame.addActionListener(this);
 
 		//Setting up the playing field
 		pnlPlayingField.setLayout(new GridLayout(3, 3, 2, 2));
@@ -115,6 +120,8 @@ public class Game implements ActionListener {
 		window.add(pnlNorth, BorderLayout.NORTH);
 		window.add(pnlSouth, BorderLayout.CENTER);
 		window.setVisible(true);
+		
+		btnNewGame.setEnabled(false);
 	}
 
 	//-------------------START OF ACTION PERFORMED CLASS-------------------------//
@@ -123,41 +130,56 @@ public class Game implements ActionListener {
 		for(int i=1; i<=9; i++) {    //THIS IS WHERE THE CODE NEEDS TO BE MODIFIED 
 			if(source == btnEmpty[i] && turn < 10) {
 				btnEmptyClicked = true;
+				
 				if(status == 'S' &&  turn % 2 == 1) {
-					btnEmpty[i].setText("X");
-
+					btnEmpty[i].setFont(new Font("Arial", Font.BOLD, 40));
+					btnEmpty[i].setBackground(Color.red);
+					btnEmpty[i].setText("X");					
+					
 					try {
-						System.out.println("send X position...");
-						communicater.sendPosition(i);
+						System.out.println("sending X position...");
+						communicater.sendPosition(i); //---- send position of X
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
-					} //---- send position of X
+					} 
 					
 					btnEmpty[i].setEnabled(false);
 					pnlPlayingField.requestFocus();
 					turn++;	
-					System.out.println(turn);
+					checkWin();	
+					
 				} else if (status == 'C' && turn % 2 == 0){
+					
+					btnEmpty[i].setFont(new Font("Arial", Font.BOLD, 40));
+					btnEmpty[i].setBackground(Color.green);
 					btnEmpty[i].setText("O");
 					try {
-						System.out.println("send O position...");
-						communicater.sendPosition(i);
+						System.out.println("sending O position...");
+						communicater.sendPosition(i); //---- send position of O
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
-					} //---- send position of O
+					} 
 					
 					btnEmpty[i].setEnabled(false);
 					pnlPlayingField.requestFocus();
-					turn++;	
-					System.out.println(turn);
+					turn++;
+					checkWin();					
 				}
 			}
-		} if(btnEmptyClicked) {
+		}
+		
+		if(btnEmptyClicked) {
 			
 			checkWin();
 			btnEmptyClicked = false;
+			
+		} else if(source == btnNewGame) {
+		
+			try {
+				communicater.sendNewGame();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			
 		} if(source == mnuNewGame) {
 			
@@ -170,53 +192,25 @@ public class Game implements ActionListener {
 			
 		} else if(source == btn1v1) {
 			
-			try {
-				//wait for another player
-				
-				communicater = new Communicater(this);
-				
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			//--- disable the join and new game button
+			btn1v1.setEnabled(false);
+			btnNewGame.setEnabled(false);
 			
-			
-			while(status == 'a') {} //wait until status is 'S' or 'C'
-			
-			
-			System.out.println("Connection Successful..");
-			
-			//Thread commThread = new Thread(communicater);
-			//commThread.start();
-			
-			if(inGame) {
-				int option = JOptionPane.showConfirmDialog(null, "If you start a new game," +
-						"your current game will be lost..." + "\n" +
-						"Are you sure you want to continue?",
-						"Quit Game?" ,JOptionPane.YES_NO_OPTION);
-				if(option == JOptionPane.YES_OPTION) {
-					inGame = false;
-				}
-			}
-			
-			if(!inGame) {
-				btnEmpty[wonNumber1].setBackground(new Color(220, 220, 220));
-				btnEmpty[wonNumber2].setBackground(new Color(220, 220, 220));
-				btnEmpty[wonNumber3].setBackground(new Color(220, 220, 220));
-				turn = 1;
-				for(int i=1; i<10; i++) {
-					btnEmpty[i].setText("");
-					btnEmpty[i].setEnabled(true);
-				}
-				win = false;
-				showGame();
-			}
+			Thread waitForPeerThread = new Thread(waitForPeer);
+			waitForPeerThread.start();
 			
 		} else if(source == mnuExit) {
 			
 			int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?",
 					"Exit Game" ,JOptionPane.YES_NO_OPTION);
-			if(option == JOptionPane.YES_OPTION)
-				System.exit(0);
+			if(option == JOptionPane.YES_OPTION){
+				try {
+					communicater.sendExit();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				System.exit(0);				
+			}				
 			
 		} else if(source == mnuInstruction || source == mnuAbout) {
 			
@@ -270,6 +264,8 @@ Start of all the other methods. |
 		pnlSouth.setLayout(new BorderLayout());
 		pnlSouth.add(pnlPlayingField, BorderLayout.CENTER);
 		pnlPlayingField.requestFocus();
+		pnlSouth.setVisible(false);
+		pnlSouth.setVisible(true);
 	}
 
 	public void checkWin() { // checks if there are 3 symbols in a row vertically, diagonally, or horizontally.
@@ -304,12 +300,13 @@ Conclusion: So basically it checks if it is equal to the btnEmpty is equal to ea
 		}
 		
 		if(win || (!win && turn>9)) {
-			if(win) {
-				if(turn % 2 == 1)
-					message = "X has won!";
-				else
-					message = "O has won!";
-				win = false;
+			if (win) {
+				if (turn % 2 == 0) {
+					message = "Player X has won!";
+				} else {
+					message = "Player O has won!";
+				}
+				win = false;				
 			} else if(!win && turn>9) {
 				message = "Both players have tied!\nBetter luck next time.";
 			}
@@ -317,6 +314,47 @@ Conclusion: So basically it checks if it is equal to the btnEmpty is equal to ea
 			for(int i=1; i<=9; i++) {
 				btnEmpty[i].setEnabled(false);
 			}
+			inGame = false;
+			btnNewGame.setEnabled(true);			
+		}
+	}
+	
+	
+	
+	public void newGame(){
+		
+		if(inGame) {
+			int option = JOptionPane.showConfirmDialog(null, "If you start a new game," +
+					"your current game will be lost..." + "\n" +
+					"Are you sure you want to continue?",
+					"Quit Game?" ,JOptionPane.YES_NO_OPTION);
+			if(option == JOptionPane.YES_OPTION) {
+				inGame = false;
+				try {
+					communicater.sendNewGame();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}			
+		}
+		
+		if(!inGame) {
+			
+			System.out.println("NOTingame");
+			btnEmpty[wonNumber1].setBackground(new Color(220, 220, 220));
+			btnEmpty[wonNumber2].setBackground(new Color(220, 220, 220));
+			btnEmpty[wonNumber3].setBackground(new Color(220, 220, 220));
+			turn = 1;
+			for(int i=1; i<10; i++) {
+				btnEmpty[i].setText("");
+				btnEmpty[i].setFont(new Font("Arial", Font.BOLD, 40));
+				btnEmpty[i].setBackground(Color.lightGray);
+				btnEmpty[i].setEnabled(true);
+			}
+			win = false;
+			System.out.println("showgame...");
+			showGame();
+			System.out.println("showgame Successful...");
 		}
 	}
 
@@ -333,14 +371,58 @@ Conclusion: So basically it checks if it is equal to the btnEmpty is equal to ea
 	}
 	
 	//----------- ADDED METHODS -----------
+	public void requestNewGame(){
+		
+		char player;
+		
+		if(status == 'S') {
+			player = 'O';
+		} else {
+			player = 'X';
+		}
+		
+		int option = JOptionPane.showConfirmDialog(null, "Player '" + player + "' wants to play a new game"
+				+ "\n" + "Accept?",
+				"Accept?" ,JOptionPane.YES_NO_OPTION);
+		if(option == JOptionPane.YES_OPTION) {
+			try {
+				communicater.sendConfirm();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			newGame();			
+		}
+	}
+	
+	public void playerQuit() {	
+		
+		char player;
+		
+		if(status == 'S') {
+			player = 'X';
+		} else {
+			player = 'O';
+		}
+		
+		JOptionPane.showMessageDialog(null, "Player '" + player + "'  has Quit", "WARNING", JOptionPane.WARNING_MESSAGE);
+	}
+	
 	public void setStatus(char status) {
 		this.status = status;
+	}
+	
+	public char getStatus() {
+		return status;
 	}
 
 	public void setGrid(int i) {
 		if (status == 'S') {
+			btnEmpty[i].setFont(new Font("Arial", Font.BOLD, 40));
+			btnEmpty[i].setBackground(Color.green);
 			btnEmpty[i].setText("O");
 		} else {
+			btnEmpty[i].setFont(new Font("Arial", Font.BOLD, 40));
+			btnEmpty[i].setBackground(Color.red);
 			btnEmpty[i].setText("X");
 		}
 		
@@ -354,12 +436,3 @@ Conclusion: So basically it checks if it is equal to the btnEmpty is equal to ea
 		new Game();// Calling the class construtor.
 	}
 }
-/*
-Changes:
-1.0- changes below: Stable
-0.9- added back button, added comments.
-0.8- added dynamic win message.
-0.7- added game function- game playable.
-0.6- changed menu layout.
-0.5- basic functions with menu and nice GUI.
- */
