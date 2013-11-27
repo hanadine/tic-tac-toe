@@ -19,7 +19,6 @@ public class Server {
 		Thread connThread = new Thread(connector);
 		connThread.start();
 		startServer();
-		
 	}
 	
 	public static void startServer() {
