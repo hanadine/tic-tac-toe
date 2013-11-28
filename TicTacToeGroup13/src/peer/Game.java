@@ -13,7 +13,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
-import java.util.*;
 public class Game implements ActionListener {
 	final String VERSION = "1.0";
 	//Setting up ALL the variables
@@ -54,11 +53,8 @@ public class Game implements ActionListener {
 	// added variable --------------
 	char status = 'a';
 	Communicater communicater;
-<<<<<<< HEAD
-	WaitForPeer waitForPeer = new WaitForPeer(this);
-=======
 	//WaitForPeer waitForPeer = new WaitForPeer(this);
->>>>>>> 29965571642365d5b8690b272c97e3bbc988f441
+
 	// -----------------------------
 	
 	String message;
@@ -199,14 +195,11 @@ public class Game implements ActionListener {
 			//--- disable the join and new game button
 			btn1v1.setEnabled(false);
 			btnNewGame.setEnabled(false);
-<<<<<<< HEAD
 		
-			Thread waitForPeerThread = new Thread(waitForPeer);
-			waitForPeerThread.start();
-=======
+//			Thread waitForPeerThread = new Thread(waitForPeer);
+//			waitForPeerThread.start();
 			
 			communicater = new Communicater(this);
->>>>>>> 29965571642365d5b8690b272c97e3bbc988f441
 			
 		} else if(source == mnuExit) {
 			
@@ -410,11 +403,7 @@ Conclusion: So basically it checks if it is equal to the btnEmpty is equal to ea
 		try {
 			communicater.close();
 		} catch (IOException e) {
-<<<<<<< HEAD
-			// TODO Auto-generated catch block
-=======
-			// Auto-generated catch block
->>>>>>> 29965571642365d5b8690b272c97e3bbc988f441
+
 			e.printStackTrace();
 		}
 		
@@ -454,20 +443,9 @@ Conclusion: So basically it checks if it is equal to the btnEmpty is equal to ea
 	}
 	//--------------------------------------
 	
-<<<<<<< HEAD
-	public void setCommunicater(Communicater communicater) {
-		this.communicater = communicater;
-	}	
-	
 	
 	public static void main(String[] args) {
 		new Game();// Calling the class construtor.
 	}
 	
-	
-=======
-	public static void main(String[] args) {
-		new Game();// Calling the class construtor.
-	}
->>>>>>> 29965571642365d5b8690b272c97e3bbc988f441
 }
