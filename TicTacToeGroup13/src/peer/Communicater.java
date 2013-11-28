@@ -5,7 +5,7 @@ import java.net.*;
 public class Communicater{
 	
 	int port = 50040, serverPort;
-	String serverAddress, ipAddress="142.157.114.147";
+	String serverAddress, ipAddress="142.157.112.61";
 	ServerSocket listener;
 	Socket peer;
 	Game game;
