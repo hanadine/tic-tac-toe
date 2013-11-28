@@ -17,6 +17,16 @@ public class Communicater{
 		
 		this.game = game;
 		
+<<<<<<< HEAD
+=======
+		WaitForPeer waitForPeer = new WaitForPeer(game, this);
+		waitForPeer.start();
+		
+	}
+	
+	public void connectToServer() throws IOException{
+	
+>>>>>>> 29965571642365d5b8690b272c97e3bbc988f441
 		try {
 			listener = new ServerSocket(port);
 			Socket client = new Socket("142.157.166.19", 50060);
@@ -33,9 +43,17 @@ public class Communicater{
 			JOptionPane.showMessageDialog(null, "server not available", "ERROR", JOptionPane.ERROR_MESSAGE);
 			game.btn1v1.setEnabled(true);
 			e.printStackTrace();
+<<<<<<< HEAD
 		}	
 		
 	}
+=======
+		}
+		
+	}
+	
+	
+>>>>>>> 29965571642365d5b8690b272c97e3bbc988f441
 
 	public void startGame() throws IOException{
 		
@@ -47,10 +65,16 @@ public class Communicater{
 		System.out.println(type);
 		if (type.equals("SERVER")){
 			
+<<<<<<< HEAD
 			peer = listener.accept();
 			game.setStatus('S');
 
 			listener.close();
+=======
+			listener.close();
+			peer = listener.accept();
+			game.setStatus('S');
+>>>>>>> 29965571642365d5b8690b272c97e3bbc988f441
 			
 		} else {
 			
@@ -100,7 +124,12 @@ public class Communicater{
 	public void close() throws IOException{
 		listener.close();
 		peer.close();
+<<<<<<< HEAD
 	}	
+=======
+	}
+	
+>>>>>>> 29965571642365d5b8690b272c97e3bbc988f441
 	
 	public void stopReceiver(){
 		receiver.stopThread();
