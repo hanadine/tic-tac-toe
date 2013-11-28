@@ -1,21 +1,25 @@
 package peer;
 
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.io.IOException;
 
 public class WaitForPeer extends Thread {
 
-	public Game game;
+	Game game;
+	Communicater communicater;
 	
-	public WaitForPeer(Game game) {
+	public WaitForPeer(Game game, Communicater communicater) {
 		this.game = game;
+		this.communicater = communicater;
 	}
 		
 	public void run() {		
-		
-		
-		game.communicater = new Communicater(game);
+	
+		try {
+			communicater.connectToServer();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		while (game.status == 'a') {
 			try {

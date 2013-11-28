@@ -17,6 +17,13 @@ public class Communicater{
 		
 		this.game = game;
 		
+		WaitForPeer waitForPeer = new WaitForPeer(game, this);
+		waitForPeer.start();
+		
+	}
+	
+	public void connectToServer() throws IOException{
+	
 		try {
 			listener = new ServerSocket(port);
 			Socket client = new Socket("142.157.166.19", 50060);
@@ -33,9 +40,11 @@ public class Communicater{
 			JOptionPane.showMessageDialog(null, "server not available", "ERROR", JOptionPane.ERROR_MESSAGE);
 			game.btn1v1.setEnabled(true);
 			e.printStackTrace();
-		}	
+		}
 		
 	}
+	
+	
 
 	public void startGame() throws IOException{
 		

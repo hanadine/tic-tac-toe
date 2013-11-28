@@ -54,7 +54,7 @@ public class Game implements ActionListener {
 	// added variable --------------
 	char status = 'a';
 	Communicater communicater;
-	WaitForPeer waitForPeer = new WaitForPeer(this);
+	//WaitForPeer waitForPeer = new WaitForPeer(this);
 	// -----------------------------
 	
 	String message;
@@ -196,8 +196,7 @@ public class Game implements ActionListener {
 			btn1v1.setEnabled(false);
 			btnNewGame.setEnabled(false);
 			
-			Thread waitForPeerThread = new Thread(waitForPeer);
-			waitForPeerThread.start();
+			communicater = new Communicater(this);
 			
 		} else if(source == mnuExit) {
 			
@@ -401,7 +400,7 @@ Conclusion: So basically it checks if it is equal to the btnEmpty is equal to ea
 		try {
 			communicater.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			// Auto-generated catch block
 			e.printStackTrace();
 		}
 		
