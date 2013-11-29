@@ -1,3 +1,13 @@
+/*
+Title: P2P Tic-Tac-Toe Game
+Class: Communicater
+Created: November 20th 2013
+Last Edited: November 28th 2013
+Authors: ECSE 414, McGill University, Fall 2013 - Introduction to Telecom - Group 10
+*/
+
+
+
 package peer;
 import java.io.*;
 import java.net.*;
@@ -13,7 +23,7 @@ public class Communicater{
 	Game game;
 	Receiver receiver;
 	
-	public Communicater(Game game) {
+	public Communicater(Game game) { //Constructor for Communicater
 		
 		this.game = game;
 
@@ -22,11 +32,14 @@ public class Communicater{
 		
 	}
 	
-	public void connectToServer() throws IOException{
+	public void connectToServer() throws IOException{ // This method serves to connect the peer to the server
 	
 		try {
 			listener = new ServerSocket(port);
-			Socket client = new Socket("142.157.166.19", 50060);
+			//String input =  JOptionPane.showInputDialog(null, "Enter server IP address:" 
+			//	       ,"");
+			//System.out.println(input);
+			Socket client = new Socket("142.157.166.82", 50060); // creates a client socket
 			DataOutputStream output = new DataOutputStream(client.getOutputStream());
 			System.out.println("port : "+ port);
 			output.writeInt(port);
@@ -49,26 +62,26 @@ public class Communicater{
 		System.out.println("test 1");
 		Socket connector = listener.accept();
 		System.out.println("test 2");
-		BufferedReader in = new BufferedReader(new InputStreamReader(connector.getInputStream()));
+		BufferedReader in = new BufferedReader(new InputStreamReader(connector.getInputStream())); //Connection with server is completely established
 		String type = in.readLine();
 		System.out.println(type);
-		if (type.equals("SERVER")){
+		if (type.equals("SERVER")){ // The peer has been sent "SERVER" from the server, and will thus now act as the host towards the other peer
 			
 			peer = listener.accept();
-			game.setStatus('S');
+			game.setStatus('S'); //SERVER Status
 
-			listener.close();
+			listener.close(); // closes the connection with the server
 		
-		} else {
+		} else { // The Peer is has been sent CLIENT from the server and will thus now act as a Client towards the other peer  
 			
-			serverPort = Integer.parseInt(in.readLine());
+			serverPort = Integer.parseInt(in.readLine()); // the address of the host peer has been sent to the client.
 						
 			serverAddress = in.readLine();
-			System.out.println("serverAddress: "+ serverAddress);
+			System.out.println("serverAddress: "+ serverAddress); 
 			
 			listener.close();
 			
-			peer = new Socket(serverAddress, serverPort);
+			peer = new Socket(serverAddress, serverPort); //The client tries to connect with the host
 			game.setStatus('C');
 
 		}
@@ -79,7 +92,7 @@ public class Communicater{
 		
 	}	
 	
-	public void sendPosition(int position) throws IOException{
+	public void sendPosition(int position) throws IOException{ // Sends a position to the other peer
 		
 		DataOutputStream outputPeer = new DataOutputStream(peer.getOutputStream());
 		System.out.println("position sent : "+ position);
@@ -87,18 +100,18 @@ public class Communicater{
 	}
 	
 	public void sendNewGame() throws IOException{		
-		DataOutputStream outputPeer = new DataOutputStream(peer.getOutputStream());
+		DataOutputStream outputPeer = new DataOutputStream(peer.getOutputStream()); //sends a new game request to the other peer
 		System.out.println("New Game Request sent");
 		outputPeer.writeInt(10);		
 	}
 	
 	public void sendConfirm() throws IOException{		
-		DataOutputStream outputPeer = new DataOutputStream(peer.getOutputStream());
+		DataOutputStream outputPeer = new DataOutputStream(peer.getOutputStream()); //sends a confirmation for the new game request
 		System.out.println("New Game Confirm sent");
 		outputPeer.writeInt(11);		
 	}
 	
-	public void sendExit() throws IOException{
+	public void sendExit() throws IOException{ // sends an exit request to the other peer
 		DataOutputStream outputPeer = new DataOutputStream(peer.getOutputStream());
 		System.out.println("Exit sent");
 		outputPeer.writeInt(12);
@@ -109,7 +122,7 @@ public class Communicater{
 		peer.close();
 	}
 	
-	public void stopReceiver(){
+	public void stopReceiver(){ // closes the receiver thread
 		receiver.stopThread();
 	}
 

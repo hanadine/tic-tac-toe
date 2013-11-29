@@ -1,7 +1,13 @@
 package peer;
 
 /*
-Title: Tic-Tac-Toe Game
+Title: P2P Tic-Tac-Toe Game
+Class: Communicater
+Created: November 20th 2013
+Last Edited: November 28th 2013
+Authors: ECSE 414, McGill University, Fall 2013 - Introduction to Telecom - Group 10
+
+Open source coded taken from
 Created: October 5, 2008
 Last Edited: pending...
 Author: Blmaster
@@ -24,7 +30,7 @@ public class Game implements ActionListener {
 			mnuExit = new JMenuItem("Exit"),
 			mnuAbout = new JMenuItem("About");
 
-	JButton btn1v1 = new JButton("Join"),
+	JButton btn1v1 = new JButton("Join"), // JOIN has been added by group 10 in order play in P2P
 			btnBack = new JButton("back"),
 			btnNewGame = new JButton("New Game");
 	
@@ -174,8 +180,11 @@ public class Game implements ActionListener {
 			btnEmptyClicked = false;
 			
 		} else if(source == btnNewGame) {
-		
+			
+			btn1v1.setEnabled(false);
+			btnNewGame.setEnabled(false);
 			try {
+				
 				communicater.sendNewGame();
 			} catch (IOException e) {
 				e.printStackTrace();
